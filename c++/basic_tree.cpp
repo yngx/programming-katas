@@ -7,39 +7,55 @@ struct node_t {
     node_t * right;
 };
 
-void displayNodeValue(node_t * p) {
-    cout << "Node data: " << p->data << endl;
+void displayData(node_t * p) {
+    cout << "node data: " << (*p).data << endl;
+}
 
+void displayNode(node_t * p) {
+    cout << "parent node data: " << p->data << endl;
+    
     // display children
     if(p->left != NULL ){
-        cout << "Left child data: " << p->left->data << endl;
+        cout << "left child data: " << p->left->data << endl;
     }
 
     if(p->right != NULL ){
-        node_t * child = p->right;
-        cout << "Right child data: " << child->data << endl;
+        cout << "right child data: " << p->right->data << endl;
     }
+
+    cout << endl;
 }
 
-void addChildNode(node_t * parent, int value){
-    node_t child = node_t();
-    child.data = value;
+void addChildNode(node_t * parent, int leftVal, int rightVal){
+    if (leftVal != NULL){
+        node_t * left = new node_t();
+        left->data = leftVal;
+        parent->left = left;
+        
+        cout << "created left child node with ";
+        displayData(left);
+    }
 
-    cout << "Created a child node. ";
-    displayNodeValue(&child);
-    parent->right = &child;
+    if (rightVal != NULL){
+        node_t * right = new node_t();
+        right->data = rightVal;
+        parent->right = right;
+        
+        cout << "created right child node with ";
+        displayData(right);
+    }
+
+    cout << endl;
 }
 
 int main() {
-    cout << "Hello, welcome. " << endl;
 
-    node_t parent = node_t();
-    parent.data = 3;
-    displayNodeValue(&parent);
-    addChildNode(&parent, 4);
+    node_t * parent = new node_t();
+    parent -> data = 3;
 
-     cout << endl << "Redisplay parent... " << endl;
-    displayNodeValue(&parent);
+    displayNode(parent);
+    addChildNode(parent, 4, 5);
+    displayNode(parent);
 
     return 0;
 }
